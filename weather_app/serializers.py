@@ -8,7 +8,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class NoteSerializer(serializers.ModelSerializer):
-    # category = serializers.StringRelatedField(read_only=True)
+    
     class Meta:
         model = Note
-        fields = "__all__"
+        fields = ['id', 'owner', 'title', 'category', 'text']
