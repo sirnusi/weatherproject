@@ -1,8 +1,19 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
-from .models import Note
-from .serializers import NoteSerializer
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
+from .models import Note, Category
+from .serializers import NoteSerializer, CategorySerializer
 from .permissions import NotePermission
 # Create your views here.
+
+class CategoryList(ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class CategoryDetail(RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    
+    
 class NoteList(ListAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
@@ -10,4 +21,6 @@ class NoteList(ListAPIView):
     
     
 class NoteDetail(RetrieveUpdateDestroyAPIView):
-    pass
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    permission_class = [NotePermission]
