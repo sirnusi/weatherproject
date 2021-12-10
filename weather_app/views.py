@@ -4,12 +4,11 @@ from .serializers import NoteSerializer, CategorySerializer
 from .permissions import NotePermission
 # Create your views here.
 
-class CategoryList(ListAPIView):
+class CategoryList(ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    permission_class = []
 
-class CategoryCreate(CreateAPIView):
-    serializer_class = CategorySerializer
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
