@@ -12,7 +12,7 @@ class CategoryList(ListAPIView):
 class CategoryCreate(CreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_class = []#admin user
+    permission_class = []
 
 class CategoryDetail(RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
