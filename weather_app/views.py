@@ -1,4 +1,4 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
 from .models import Note, Category
 from .serializers import NoteSerializer, CategorySerializer
 from .permissions import NotePermission
@@ -14,7 +14,7 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     
     
-class NoteList(ListAPIView):
+class NoteList(ListCreateAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_class = [NotePermission]
