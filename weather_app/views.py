@@ -37,8 +37,10 @@ class NoteList(ListAPIView):
 class NoteSearch(ListAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['title', 'category__name']
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['title', 'category__name']
+    # filter_backends = [filters.SearchFilter]
+    # search_fields = ['title', 'category__name']
     
 class NoteCreate(CreateAPIView):
     serializer_class = NoteSerializer
