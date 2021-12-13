@@ -1,5 +1,6 @@
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView, CreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Note, Category
 from .serializers import NoteSerializer, CategorySerializer
@@ -32,6 +33,12 @@ class NoteList(ListAPIView):
     #     my_notes = Note.objects.filter(owner=self.request.user)
     #     return my_notes                
 
+class NoteSearch(ListAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ['title', 'category']
+    
 class NoteCreate(CreateAPIView):
     serializer_class = NoteSerializer
     permission_classes = [NotePermission]
