@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, ListCreateAPIView, CreateAPIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 from .models import Note, Category
 from .serializers import NoteSerializer, CategorySerializer
 from .permissions import NotePermission
@@ -24,6 +25,8 @@ class NoteList(ListAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [NotePermission]
+    filter_backends = [DjangoFilterBackend] #filter by the fields in our models.py in your url
+    filterset_fields = ['category__name', 'owner__username']
 
     # def get_queryset(self):
     #     my_notes = Note.objects.filter(owner=self.request.user)
@@ -42,6 +45,10 @@ class NoteDetail(RetrieveUpdateDestroyAPIView):
 class UserNote(ListAPIView):
     serializer_class = NoteSerializer
     
+    # def get_queryset(self):
+    #     username = self.kwargs['username']
+    #     return Note.objects.filter(owner__username=username)    
+    
     def get_queryset(self):
-        username = self.kwargs['username']
+        username = self.request.query_params.get('username')
         return Note.objects.filter(owner__username=username)    
