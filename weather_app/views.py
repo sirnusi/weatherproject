@@ -22,6 +22,7 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
     serializer_class = CategorySerializer
     permission_classes = [IsAdminUser]
     
+    
 class NoteList(ListAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
