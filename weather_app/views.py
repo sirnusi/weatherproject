@@ -29,11 +29,9 @@ class NoteList(ListAPIView):
         return my_notes                
 
 class NoteCreate(CreateAPIView):
-    queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [NotePermission]
-    
-    
+         
 class NoteDetail(RetrieveUpdateDestroyAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
