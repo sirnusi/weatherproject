@@ -37,3 +37,11 @@ class NoteDetail(RetrieveUpdateDestroyAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     permission_classes = [NotePermission]
+
+#filter the list by username in the database. 
+class UserNote(ListAPIView):
+    serializer_class = NoteSerializer
+    
+    def get_queryset(self):
+        username = self.kwargs['username']
+        return Note.objects.filter(owner__username=username)    
