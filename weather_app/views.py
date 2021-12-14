@@ -38,7 +38,7 @@ class NoteSearch(ListAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
     filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['title', 'category__name']
+    ordering_fields = ['created', 'category__name']
     # filter_backends = [filters.SearchFilter]
     # search_fields = ['title', 'category__name']
     
