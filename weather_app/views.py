@@ -5,6 +5,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Note, Category
 from .serializers import NoteSerializer, CategorySerializer
 from .permissions import NotePermission
+from .pagination import NotePagination
 # Create your views here.
 
 class CategoryList(ListAPIView):
@@ -29,6 +30,7 @@ class NoteList(ListAPIView):
     permission_classes = [NotePermission]
     filter_backends = [DjangoFilterBackend] #filter by the fields in our models.py in your url
     filterset_fields = ['category__name', 'owner__username']#the exact same word as it is on the database.
+    pagination_class = NotePagination
 
     # def get_queryset(self):
     #     my_notes = Note.objects.filter(owner=self.request.user)
@@ -39,6 +41,7 @@ class NoteSearch(ListAPIView):
     serializer_class = NoteSerializer
     filter_backends = [filters.OrderingFilter]
     ordering_fields = ['created', 'category__name']
+    pagination_class = NotePagination
     # filter_backends = [filters.SearchFilter]
     # search_fields = ['title', 'category__name']
     
