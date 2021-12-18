@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'weather_app', 
     'rest_framework',
+    'django_filters',
     'rest_framework.authtoken',
-    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -133,6 +133,6 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated',
     # ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
     ]
 }
