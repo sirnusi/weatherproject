@@ -2,8 +2,8 @@ from rest_framework import serializers
 from .models import Note, Category
 
 class NoteSerializer(serializers.ModelSerializer):
-    owner = serializers.StringRelatedField(read_only=True)
-    category = serializers.CharField(source='category.name')
+    #owner = serializers.StringRelatedField(read_only=True)
+    # category = serializers.CharField(source='category.name')
     
     class Meta:
         model = Note
