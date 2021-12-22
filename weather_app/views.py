@@ -46,7 +46,7 @@ class NoteSearch(ListAPIView):
     
 class NoteCreate(CreateAPIView):
     serializer_class = NoteSerializer
-    permission_classes = [NotePermission]
+    permission_classes = [IsAuthenticated]
          
 class NoteDetail(RetrieveUpdateDestroyAPIView):
     queryset = Note.objects.all()
