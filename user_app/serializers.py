@@ -21,3 +21,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
         email_check = User.objects.filter(email=self.validated_data['email'])
         if email_check:
             raise serializers.ValidationError({'Error': 'Email is used already!!'})
+        
+        account = User(email=self.validated_data['email'], username=self.validated_data['username'])
+        account.set_password(password)
+        account.save()
+        
+        return account
