@@ -11,13 +11,13 @@ class RegistrationSerializer(serializers.ModelSerializer):
             'password': {'write_only': True}
         }
         
-        def save(self):
-            password = self.validated_data['password']
-            password2 = self.validated_data['password2']
+    def save(self):
+        password = self.validated_data['password']
+        password2 = self.validated_data['password2']
             
-            if password != password2:
-                raise serializers.ValidationError({'error':'P1 and P2 should be the same'})
+        if password != password2:
+            raise serializers.ValidationError({'error':'P1 and P2 should be the same'})
             
-            email_check = User.objects.filter(email=self.validated_data['email'])
-            if email_check:
-                raise serializers.ValidationError({'Error': 'Email is used already!!'})
+        email_check = User.objects.filter(email=self.validated_data['email'])
+        if email_check:
+            raise serializers.ValidationError({'Error': 'Email is used already!!'})
