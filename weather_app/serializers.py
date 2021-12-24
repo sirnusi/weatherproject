@@ -8,6 +8,7 @@ class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = "__all__"
+        
 
 class CategorySerializer(serializers.ModelSerializer):
     notes = NoteSerializer(many=True, read_only=True)

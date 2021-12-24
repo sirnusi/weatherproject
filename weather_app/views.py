@@ -1,3 +1,4 @@
+from django.urls.base import reverse
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import filters
@@ -25,15 +26,15 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
     
     
 class NoteList(ListAPIView):
-    queryset = Note.objects.all()
     serializer_class = NoteSerializer
+   
     filter_backends = [DjangoFilterBackend] #filter by the fields in our models.py in your url
     filterset_fields = ['category__name', 'owner__username']#the exact same word as it is on the database.
     pagination_class = NotePagination
 
-    # def get_queryset(self):
-    #     my_notes = Note.objects.filter(owner=self.request.user)
-    #     return my_notes                
+    def get_queryset(self):
+        my_notes = Note.objects.filter(owner=self.request.user)
+        return my_notes                
 
 class NoteSearch(ListAPIView):
     queryset = Note.objects.all()
