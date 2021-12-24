@@ -45,18 +45,21 @@ class NoteTestCase(APITestCase):
         self.user = User.objects.create_user(username='example', password='NewPassword123')
         self.token = Token.objects.get(user__username='example')
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
-        
-        self.category = Category.objects.create(name='Sports', website='https://sports.com')
-        self.note = Note.objects.create(title='New Note', owner=self.user, 
-                                        category=self.category, text='Wonderful Boy')
+
+        self.category = Category.objects.create(name='New Sports', website='https://newsports.com')
+        # self.note = Note.objects.create(title='New Note', owner=self.user, 
+                                        #category=self.category, text='Wonderful Boy')
     
     def test_note_create(self):
         data = {
-            'title':'example',
-            'owner': self.user,
-            'category': 'Sports',
-            'text': 'Wonderful Boy' 
+            'title': 'Create',
+            'owner': self.user.id,
+            'category': self.category.id,
+            'text': 'Rich always create opportunities.'
         }
         response = self.client.post(reverse('note-create'), data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        
+    
+    def test_note_list(self):
+        response = self.client.get(reverse('note-list'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
