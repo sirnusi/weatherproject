@@ -26,15 +26,17 @@ class CategoryDetail(RetrieveUpdateDestroyAPIView):
     
     
 class NoteList(ListAPIView):
+    queryset = Note.objects.all()
     serializer_class = NoteSerializer
-   
     filter_backends = [DjangoFilterBackend] #filter by the fields in our models.py in your url
     filterset_fields = ['category__name', 'owner__username']#the exact same word as it is on the database.
     pagination_class = NotePagination
 
-    def get_queryset(self):
-        my_notes = Note.objects.filter(owner=self.request.user)
-        return my_notes                
+    #User Anonymous
+    # def get_queryset(self):
+    #     owner = self.request.user
+    #     my_notes = Note.objects.filter(owner)
+    #     if owner                
 
 class NoteSearch(ListAPIView):
     queryset = Note.objects.all()
@@ -55,13 +57,13 @@ class NoteDetail(RetrieveUpdateDestroyAPIView):
     permission_classes = [NotePermission]
 
 #filter the list by username in the database. 
-class UserNote(ListAPIView):
-    serializer_class = NoteSerializer
+# class UserNote(ListAPIView):
+#     serializer_class = NoteSerializer
     
-    # def get_queryset(self):
-    #     username = self.kwargs['username']
-    #     return Note.objects.filter(owner__username=username)    
+#     # def get_queryset(self):
+#     #     username = self.kwargs['username']
+#     #     return Note.objects.filter(owner__username=username)    
     
-    def get_queryset(self):
-        username = self.request.query_params.get('username')
-        return Note.objects.filter(owner__username=username)    
+#     def get_queryset(self):
+#         username = self.request.query_params.get('username')
+#         return Note.objects.filter(owner__username=username)    
