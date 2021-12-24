@@ -47,8 +47,8 @@ class NoteTestCase(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
         self.category = Category.objects.create(name='New Sports', website='https://newsports.com')
-        # self.note = Note.objects.create(title='New Note', owner=self.user, 
-                                        #category=self.category, text='Wonderful Boy')
+        self.note = Note.objects.create(title='New Note', owner=self.user, 
+                                        category=self.category, text='Wonderful Boy')
     
     def test_note_create(self):
         data = {
@@ -63,3 +63,21 @@ class NoteTestCase(APITestCase):
     def test_note_list(self):
         response = self.client.get(reverse('note-list'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+    def test_note_detail(self):
+        response = self.client.get(reverse('note-detail', args=(self.note.id, )))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+    def test_note_update(self):
+        data = {
+            'title':'Create - Updated',
+            'owner': self.user.id,
+            'category': self.category.id,
+            'text': 'This one is coming with a better update'
+        }
+        response = self.client.put(reverse('note-detail', args=(self.note.id, )), data)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+    def test_note_delete(self):
+        response = self.client.delete(reverse('note-detail', args=(self.note.id, )))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
