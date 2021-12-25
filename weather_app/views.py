@@ -30,7 +30,7 @@ class NoteList(ListAPIView):
     # queryset = Note.objects.all()
     serializer_class = NoteSerializer
     filter_backends = [DjangoFilterBackend] #filter by the fields in our models.py in your url
-    filterset_fields = ['category__name', 'owner__username']#the exact same word as it is on the database.
+    filterset_fields = ['category__name', 'owner__username'] #the exact same word as it is on the database.
     pagination_class = NotePagination
 
     #User Anonymous
