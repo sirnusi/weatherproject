@@ -36,7 +36,7 @@ class NoteList(ListAPIView):
     #User Anonymous
     def get_queryset(self):
         if self.request.user.is_authenticated == False:
-            raise serializers.ValidationError({'Error':'Try to login to access your saved notes'})
+            return serializers.ValidationError({'Error':'Try to login to access your saved notes'})
         
         my_notes = Note.objects.filter(owner=self.request.user)
         return my_notes             
